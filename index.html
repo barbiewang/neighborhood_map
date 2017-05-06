@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
+    <title>Neighborhood Map</title>
+    <link rel="stylesheet" type="text/css" href="main.css"  />
+</head>
+<body>
+    <div id="container">
+        <div id = "leftSide">
+            <h3 class="city">深圳市</h3>
+            <div>
+                <input type="text" placeholder="搜索深圳市地图"/>
+                <button  id="filterBtn" type="button">过滤</button>
+                <ul id="locationLs" data-bind="places">
+                    <li data-bin="text:$data"></li>
+                </ul>
+            </div>
+        </div>
+        <div id="rightSide">
+            <div class="menu">
+                <div>
+                    <span class="nave" data-bind="event: { mouseover: enableDetails, mouseout: disableDetails }, style:{color:detailsEnabled()? 'blue':'white'}, click:showMenu">
+                        三
+                    </span>
+                    <span data-bind="visible: detailsEnabled">
+                    菜单
+                    </span>
+                    <ul class="menuUl" data-bind="foreach:">
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script async src="js/knockout-3.4.2.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyCDVbuAUKVjeXtZjTPDTRQK-hkrBhD097s&v=3"></script>
+    <script async src="https://en.wikipedia.org/w/api.php?"></script>
+    <script async src="js/main.js"></script>
+</body>
+</html>
