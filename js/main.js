@@ -108,7 +108,7 @@ var wikiData = function(marker){
         success: function (response) {
             var article = response[1][0];
             var url = response[3][0];
-            wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a></div>');
+            wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
             clearTimeout(wikiRequestTimeOut)
         }
     })
