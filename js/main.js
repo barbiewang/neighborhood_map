@@ -64,9 +64,8 @@ var initMap = function() {
         marker.addListener('click', function () {
             populateInfoWindow(this, largeInfoWindow);
             wikiData(this);
-            //toggleBounce(this);
+            toggleBounce(this);
         });
-       // google.maps.event.addListener(marker, 'click', toggleBounce(marker));
     }
     map.fitBounds(bounds);
     };
@@ -89,11 +88,10 @@ var populateInfoWindow = function(marker,infoWindow){
     }
 };
 var toggleBounce = function (marker) {
-    if(marker.getAnimation() != null){
+    if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
-    }
-    else{
-        marker.setAnimation(google.maps.Animation.Bounce)
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
     }
 };
 var wikiData = function(marker){
@@ -101,7 +99,8 @@ var wikiData = function(marker){
     var wikiHeader = $("#wiki-header");
     var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' +addr+ '&format=json&callback=wikiCallback';
     var wikiRequestTimeOut = setTimeout(function(){
-        $wikiElem.text("failed to get wikipedia sources");
+        wikiHeader.append('<div> failed to get wikipedia sources</div>');
+        toggleBounce(marker);
     },8000);
     $.ajax(wikiUrl, {
         dataType: 'jsonp',
@@ -109,6 +108,9 @@ var wikiData = function(marker){
             var article = response[1][0];
             var url = response[3][0];
             wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
+            setTimeout(function(){
+                toggleBounce(marker);
+            },1500);
             clearTimeout(wikiRequestTimeOut)
         }
     })

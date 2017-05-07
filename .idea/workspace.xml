@@ -66,12 +66,12 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="112" column="9" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
+            <state relative-caret-position="-482">
+              <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1494170341655" expanded="true" signature="2840:2852" ph="..." />
-                <marker date="1494170341655" expanded="true" signature="2840:2869" ph="..." />
+                <marker date="1494172932701" expanded="true" signature="2758:2770" ph="..." />
+                <marker date="1494172932701" expanded="true" signature="2758:2787" ph="..." />
               </folding>
             </state>
           </provider>
@@ -114,7 +114,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -127,7 +127,13 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -204,12 +210,12 @@
       <option name="presentableId" value="Default" />
       <updated>1493941660983</updated>
       <workItem from="1493941663183" duration="21699000" />
-      <workItem from="1494115102600" duration="20123000" />
+      <workItem from="1494115102600" duration="22697000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41822000" />
+    <option name="totallyTimeSpent" value="44396000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -249,7 +255,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/main.js</url>
-          <line>73</line>
+          <line>72</line>
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
@@ -322,12 +328,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="112" column="9" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
+        <state relative-caret-position="-482">
+          <caret line="67" column="11" selection-start-line="67" selection-start-column="11" selection-end-line="67" selection-end-column="11" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1494170341655" expanded="true" signature="2840:2852" ph="..." />
-            <marker date="1494170341655" expanded="true" signature="2840:2869" ph="..." />
+            <marker date="1494172932701" expanded="true" signature="2758:2770" ph="..." />
+            <marker date="1494172932701" expanded="true" signature="2758:2787" ph="..." />
           </folding>
         </state>
       </provider>
