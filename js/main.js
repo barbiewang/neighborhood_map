@@ -4,7 +4,7 @@
 "use strict";
 var touristPlaces = ["世界之窗","欢乐谷","海岸城","深圳湾公园","羊台山公园","莲花山公园"];
 var gobutton = $('#go');
-var inputVal = $('#autocomplete').value;
+
 
 var MapViewModel = function (){
     this.detailsEnabled = ko.observable(false);
@@ -69,7 +69,6 @@ var initMap = function() {
             toggleBounce(this);
         });
     }
-
         map.fitBounds(bounds);
     autocomplete = new google.maps.places.Autocomplete(
         (document.getElementById('autocomplete')), {
@@ -78,26 +77,25 @@ var initMap = function() {
         });
     autocomplete.addListener('place_changed', fillInAddress);
     gobutton.click(function() {
+        var inputVal = $('#autocomplete').val();
         handleAddress(inputVal);
-       // renewLi();
+        renewLi();
     });
 };
 
 var renewLi = function(){
    var lis = $('.location');
+    var inputVal = $('#autocomplete').val();
     for (var i= 0;i<lis.length;i++){
         var li = lis[i];
-        li.setAttribute('id','i');
-        var targetLi = $("#i");
-        if(targetLi.innerText === inputVal){
-            targetLi.css("display","block");
-        }else{
-            targetLi.css("display","none");
+        li.style.display = "none";
+        if(li.innerText === inputVal){
+            li.style.display = "block";
+            li.style.color = "white";
+            wikiBrief(li);
         }
     }
-
 };
-
 var handleAddress = function (place) {
     if (place === undefined) {
         return;
@@ -121,8 +119,6 @@ var fillInAddress = function () {
     var place = autocomplete.getPlace();
     handleAddress(place.name);
 };
-
-
 var populateInfoWindow = function(marker,infoWindow){
     if(infoWindow.marker !== marker){
         infoWindow.marker = marker;
@@ -151,6 +147,7 @@ var wikiLink = function(marker){
     $.ajax(wikiUrl, {
         dataType: 'jsonp',
         success: function (response) {
+            console.info(response);
             var article = response[1][0];
             var url = response[3][0];
             wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
@@ -162,25 +159,49 @@ var wikiLink = function(marker){
     })
 };
 
+var wikiBrief = function(li) {
+    var addr = li.innerText;
+    var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=parse&format=json&prop=text&section=0&page=addr&callback=wikiCallback';
+    $.ajax({
+        url: wikiUrl,
+        dataType: 'jsonp',
+        //type: 'GET',
+       // async: false,
+        //contentType: "application/json; charset=utf-8",
+       //headers: {'Api-User-Agent': 'Example/1.0'},
+        success: function (data,textStatus, jqXHR) {
+           console.info(data);
+                var article = data.parse.text["*"];
+                li.append("<div>" + article + "</div>");
+                clearTimeout(wikiRequestTimeOut)
+            }
+    });
+    var wikiRequestTimeOut = setTimeout(function () {
+        //li.append('<div> failed to get wikipedia sources</div>');
+        li.innerHTML += "<div> failed to get wikipedia sources</div>";
+    },8000);
+};
+
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
 
 
-function geolocate() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-                center: geolocation,
-                radius: position.coords.accuracy
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
             });
-            autocomplete.setBounds(circle.getBounds());
-        });
+        }
     }
-}
+
 
 
 
