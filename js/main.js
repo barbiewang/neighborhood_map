@@ -3,12 +3,14 @@
  */
 "use strict";
 var touristPlaces = ["世界之窗","欢乐谷","海岸城","深圳湾公园","羊台山公园","莲花山公园"];
+var gobutton = $('#go');
+var inputVal = $('#autocomplete').value;
 
 var MapViewModel = function (){
     this.detailsEnabled = ko.observable(false);
     this.places = ko.observableArray(touristPlaces);
     this.text = ko.observable();
-    this.placeInEnglish = ko.observableArray([ 'Window of the World', 'OCT Bay','Coastal City','Shenzhen Bay Park',"Mount Yangtai","Lianhuashan Park"]);
+
 };
 
 MapViewModel.prototype.enableDetails = function(){
@@ -31,7 +33,7 @@ var locations = [
     {title: '欢乐谷', location: {lat: 22.5402908,lng: 113.9818588}},
     {title: '海岸城', location: {lat: 22.516975,lng: 113.934716}},
     {title: '深圳湾公园', location: {lat: 22.5224158, lng: 114.0003285}},
-    {title: "羊台山", location: {lat: 22.6682145, lng: 113.9857292}},
+    {title: "羊台山公园", location: {lat: 22.6512447, lng: 113.9710522}},
     {title: "莲花山公园", location: {lat: 22.555043, lng: 114.058332}}
 ];
 //加载地图的函数
@@ -75,11 +77,25 @@ var initMap = function() {
             componentRestrictions: {country:  "CN"}
         });
     autocomplete.addListener('place_changed', fillInAddress);
-    var gobutton = $("#go");
     gobutton.click(function() {
-        var place = document.getElementById('autocomplete').value;
-        handleAddress(place);
+        handleAddress(inputVal);
+       // renewLi();
     });
+};
+
+var renewLi = function(){
+   var lis = $('.location');
+    for (var i= 0;i<lis.length;i++){
+        var li = lis[i];
+        li.setAttribute('id','i');
+        var targetLi = $("#i");
+        if(targetLi.innerText === inputVal){
+            targetLi.css("display","block");
+        }else{
+            targetLi.css("display","none");
+        }
+    }
+
 };
 
 var handleAddress = function (place) {

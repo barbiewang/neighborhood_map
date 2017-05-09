@@ -14,7 +14,7 @@
                 <input id="autocomplete" type="text" placeholder="搜索深圳市景点" onFocus="geolocate()" data-bind="value=text"/>
                 <button  id="go" type="button">Go</button>
                 <ul id="locationLs" data-bind="foreach:places">
-                    <li id = "location" data-bind="text:$data"><!--data-bind="text:$data, click:nytimeData">
+                    <li class= "location" data-bind="text:$data"><!--data-bind="text:$data, click:nytimeData">
                         <span id="nytime" data-bind="text:nytimeData"></span> -->
                     </li>
                 </ul>
