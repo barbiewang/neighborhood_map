@@ -161,19 +161,20 @@ var wikiLink = function(marker){
 
 var wikiBrief = function(li) {
     var addr = li.innerText;
-    var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=parse&format=json&prop=text&section=0&page=addr&callback=wikiCallback';
+   // var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=' + addr;
+    var wikiUrl ='https://zh.wikipedia.org/w/api.php?action=parse&format=json&page='+ addr + '&callback=wikiCallback';
     $.ajax({
         url: wikiUrl,
         dataType: 'jsonp',
-        //type: 'GET',
-       // async: false,
+        type: 'GET',
+       async: false,
         //contentType: "application/json; charset=utf-8",
-       //headers: {'Api-User-Agent': 'Example/1.0'},
-        success: function (data,textStatus, jqXHR) {
-           console.info(data);
-                var article = data.parse.text["*"];
-                li.append("<div>" + article + "</div>");
-                clearTimeout(wikiRequestTimeOut)
+       headers: {'Api-User-Agent': 'Example/1.0'},
+        success: function (data) {
+           // console.info(data);
+            var summary = data.parse.text['*'];
+            li.innerHTML += "<div id='wikiSummary'>" + summary + "</div>";
+            clearTimeout(wikiRequestTimeOut)
             }
     });
     var wikiRequestTimeOut = setTimeout(function () {

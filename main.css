@@ -36,6 +36,11 @@ html, body{
     color:gray;
     line-height:2em;
 }
+#wikiSummary{
+    font-size:0.8em;
+    height:50%;
+
+}
 .menu{
     height:10%;
     width:100%;
