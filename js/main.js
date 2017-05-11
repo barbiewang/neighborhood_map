@@ -104,10 +104,10 @@ var handleAddress = function (place) {
             targetMarker = markers[i];
             targetMarker.setMap(map);
             toggleBounce(targetMarker);
-            //设置定时器，在1.5s以后取消弹跳；
+            //设置定时器，在3s以后取消弹跳；
             setTimeout(function() {
                 toggleBounce(targetMarker);
-            },1500);
+            },3000);
         }
 
     }
@@ -123,8 +123,19 @@ var renewLi = function(){
         if(li.innerText === inputVal){
             li.style.display = "block";
             li.style.color = "white";
+            li.style.cursor = "pointer";
             //增加wikiPedia API 方法
-            wikiBrief(li);
+            li.addEventListener("mouseover",function(){
+               this.style.color = "red";
+            });
+            li.addEventListener("mouseout",function(){
+                this.style.color = "white";
+            });
+            li.addEventListener("click",function(){
+                wikiBrief(this);
+            });
+
+
         }
     }
 
@@ -166,10 +177,10 @@ var wikiLink = function(marker){
             var url = response[3][0];
             //如果异步请求成功，则在infoWindow中添加wiki链接
             wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
-            //为了避免点击两次marker来取消弹跳，这里设置定时器，在异步请求成功后1.5s停止弹跳
+            //为了避免点击两次marker来取消弹跳，这里设置定时器，在异步请求成功后2s停止弹跳
             setTimeout(function(){
                 toggleBounce(marker);
-            },1500);
+            },2000);
             //如果异步请求成功，则清除之前设置的wikiRequestTimeOut函数
             clearTimeout(wikiRequestTimeOut)
         }
@@ -189,8 +200,8 @@ var wikiBrief = function(li) {
         success: function (data) {
            // console.info(data);
             var summary = data.parse.text['*'];
-            li.innerHTML += "<div id='wikiSummary'>" + summary + "</div>";
-            var markersA = $("a");
+            li.innerHTML +=  "<div id='wikiSummary'>" + summary + "</div>";
+            //var markersA = $("a");
             //想改变href的值，但不知为什么变不了
             // for(var i = 0;i<markersA.length;i++){
             //     var markerA = markersA[i];

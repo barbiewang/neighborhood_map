@@ -1,3 +1,4 @@
+/*将整个页面的背景设为黑色*/
 html, body{
     background-color: black;
     color:white;
@@ -8,7 +9,7 @@ html, body{
 #container{
     height:100%;
     width:100%;
-    display: -webkit-inline-flex;
+    display: -webkit-inline-flex;/*将container设为flex,则无需设置float、position等属性*/
     display:inline-flex;
 }
 #leftSide{
@@ -36,9 +37,11 @@ html, body{
     color:gray;
     line-height:2em;
 }
+
 #wikiSummary{
     font-size:0.8em;
-    height:50%;
+    height:400px;
+    overflow: scroll;
 
 }
 .menu{
@@ -57,8 +60,9 @@ html, body{
     bottom:0;
     right: 0;
     position:absolute;
+
 }
-@media screen and (max-device-width: 375px){
+@media screen and (max-device-width: 450px){
     #leftSide{
         height:100%;
         width:75%;
