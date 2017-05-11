@@ -2,15 +2,14 @@
 这是这个使用knockOut的view Model
  */
 "use strict";
+//预先定义数组及数组的值；
 var touristPlaces = ["世界之窗","欢乐谷","海岸城","深圳湾公园","羊台山公园","莲花山公园"];
 var gobutton = $('#go');
 
-
 var MapViewModel = function (){
     this.detailsEnabled = ko.observable(false);
-    this.places = ko.observableArray(touristPlaces);
+    this.places = ko.observableArray(touristPlaces);//默认显示所有地点
     this.text = ko.observable();
-
 };
 
 MapViewModel.prototype.enableDetails = function(){
@@ -38,6 +37,7 @@ var locations = [
 ];
 //加载地图的函数
 var initMap = function() {
+    //呈现地图
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 22.53683, lng: 114.0413013},
         zoom: 12,
@@ -62,7 +62,9 @@ var initMap = function() {
         });
         // Push the marker to our array of markers.
         markers.push(marker);
+        //将标记呈现在可见的界限内
         bounds.extend(marker.position);
+        //给每一个标记添加点击事件
         marker.addListener('click', function () {
             populateInfoWindow(this, largeInfoWindow);
             wikiLink(this);
@@ -70,6 +72,7 @@ var initMap = function() {
         });
     }
         map.fitBounds(bounds);
+    //添加Google api 的自动完成功能
     autocomplete = new google.maps.places.Autocomplete(
         (document.getElementById('autocomplete')), {
             types: ['geocode'],
@@ -82,31 +85,26 @@ var initMap = function() {
         renewLi();
     });
 };
-
-var renewLi = function(){
-   var lis = $('.location');
-    var inputVal = $('#autocomplete').val();
-    for (var i= 0;i<lis.length;i++){
-        var li = lis[i];
-        li.style.display = "none";
-        if(li.innerText === inputVal){
-            li.style.display = "block";
-            li.style.color = "white";
-            wikiBrief(li);
-        }
-    }
+//input输入并按enter键时出发的函数
+var fillInAddress = function () {
+    var place = autocomplete.getPlace();
+    handleAddress(place.name);
 };
+//当确认input输入的值时，地图上标记有弹跳反应
 var handleAddress = function (place) {
     if (place === undefined) {
         return;
     }
     var targetMarker = null;
     for(var i=0;i<markers.length;i++){
+        //先将所有标记去除
         markers[i].setMap(null);
+        //如果输入的值等于marker的title，则发生弹跳反应
         if (place == markers[i].title) {
             targetMarker = markers[i];
             targetMarker.setMap(map);
             toggleBounce(targetMarker);
+            //设置定时器，在1.5s以后取消弹跳；
             setTimeout(function() {
                 toggleBounce(targetMarker);
             },1500);
@@ -114,11 +112,24 @@ var handleAddress = function (place) {
 
     }
 };
+//在点击"go"button时触发的函数，更新ul列表
+var renewLi = function(){
+   var lis = $('.location');
+    var inputVal = $('#autocomplete').val();
+    //遍历所有li元素，将不等于input值的li隐藏，等于input值的li展现，并改变字体颜色
+    for (var i= 0;i<lis.length;i++){
+        var li = lis[i];
+        li.style.display = "none";
+        if(li.innerText === inputVal){
+            li.style.display = "block";
+            li.style.color = "white";
+            //增加wikiPedia API 方法
+            wikiBrief(li);
+        }
+    }
 
-var fillInAddress = function () {
-    var place = autocomplete.getPlace();
-    handleAddress(place.name);
 };
+// 设置marker的infoWindow
 var populateInfoWindow = function(marker,infoWindow){
     if(infoWindow.marker !== marker){
         infoWindow.marker = marker;
@@ -129,6 +140,7 @@ var populateInfoWindow = function(marker,infoWindow){
         })
     }
 };
+//设置marker弹跳的函数
 var toggleBounce = function (marker) {
     if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
@@ -136,10 +148,12 @@ var toggleBounce = function (marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
     }
 };
+//设置在infoWindow展现的wiki pedia api
 var wikiLink = function(marker){
     var addr = marker.title;
     var wikiHeader = $("#wiki-header");
     var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=opensearch&search=' +addr+ '&format=json&callback=wikiCallback';
+    //如果8秒后无反应，则显示失败加载；
     var wikiRequestTimeOut = setTimeout(function(){
         wikiHeader.append('<div> failed to get wikipedia sources</div>');
         toggleBounce(marker);
@@ -150,18 +164,20 @@ var wikiLink = function(marker){
             console.info(response);
             var article = response[1][0];
             var url = response[3][0];
+            //如果异步请求成功，则在infoWindow中添加wiki链接
             wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
+            //为了避免点击两次marker来取消弹跳，这里设置定时器，在异步请求成功后1.5s停止弹跳
             setTimeout(function(){
                 toggleBounce(marker);
             },1500);
+            //如果异步请求成功，则清除之前设置的wikiRequestTimeOut函数
             clearTimeout(wikiRequestTimeOut)
         }
     })
 };
-
+//点击go button时触发的函数，获取维基百科的相关内容
 var wikiBrief = function(li) {
     var addr = li.innerText;
-   // var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=' + addr;
     var wikiUrl ='https://zh.wikipedia.org/w/api.php?action=parse&format=json&page='+ addr + '&callback=wikiCallback';
     $.ajax({
         url: wikiUrl,
@@ -174,19 +190,29 @@ var wikiBrief = function(li) {
            // console.info(data);
             var summary = data.parse.text['*'];
             li.innerHTML += "<div id='wikiSummary'>" + summary + "</div>";
+            var markersA = $("a");
+            //想改变href的值，但不知为什么变不了
+            // for(var i = 0;i<markersA.length;i++){
+            //     var markerA = markersA[i];
+                // var hrefVal = markerA.getAttribute("href");
+                // hrefVal.replace(/wiki/,"https://zh.wikipedia.org/wiki/");
+                // markerA.setAttribute("href","https://zh.wikipedia.org/wiki/"+ attr);
+            // }
             clearTimeout(wikiRequestTimeOut)
             }
+    }).fail(function(response){
+        var error = response.error.info;
+        li.innerHTML += "<div> Request failed:"+ error+"</div>";
+        clearTimeout(wikiRequestTimeOut)
     });
     var wikiRequestTimeOut = setTimeout(function () {
         //li.append('<div> failed to get wikipedia sources</div>');
-        li.innerHTML += "<div> failed to get wikipedia sources</div>";
+        li.innerHTML += "<div> 请求超时，请重新尝试</div>";
     },8000);
 };
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
-
-
     function geolocate() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
