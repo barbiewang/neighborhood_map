@@ -84,6 +84,7 @@ var initMap = function() {
         handleAddress(inputVal);
         renewLi();
     });
+    //点击时改变地左右侧布局
     var nave = $(".nave");
     nave.click(function(){
         toggleNave();
@@ -245,6 +246,7 @@ var wikiBrief = function(li) {
             });
         }
     }
+//切换布局
 var toggleNave = function () {
     var left= $(".left");
     var right = $(".right");
