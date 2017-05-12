@@ -84,6 +84,11 @@ var initMap = function() {
         handleAddress(inputVal);
         renewLi();
     });
+    var nave = $(".nave");
+    nave.click(function(){
+        toggleNave();
+    });
+
 };
 //input输入并按enter键时出发的函数
 var fillInAddress = function () {
@@ -240,7 +245,17 @@ var wikiBrief = function(li) {
             });
         }
     }
-
-
-
-
+var toggleNave = function () {
+    var left= $(".left");
+    var right = $(".right");
+    var map = $(".mapStyle");
+    if (left.length) {
+        left.removeClass("left").addClass("leftuv");
+        right.removeClass("right").addClass("rightuv");
+        map.removeClass("mapStyle").addClass("mapuv");
+    } else {
+        $(".leftuv").removeClass("leftuv").addClass("left");
+        $(".rightuv").removeClass("rightuv").addClass("right");
+        $(".mapuv").removeClass("mapuv").addClass("mapStyle");
+    }
+};

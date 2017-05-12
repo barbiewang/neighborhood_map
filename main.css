@@ -12,7 +12,7 @@ html, body{
     display: -webkit-inline-flex;/*将container设为flex,则无需设置float、position等属性*/
     display:inline-flex;
 }
-#leftSide{
+.left{
     height:100%;
     width:25%;
     padding:1%;
@@ -21,7 +21,7 @@ html, body{
     padding:0 25%;
     letter-spacing:5px;
 }
-#rightSide{
+.right{
     width:75%;
     height:100%;
     padding:1%
@@ -54,13 +54,30 @@ html, body{
     font-size:1.5em;
 
 }
-#map{
+.mapStyle{
     height:90%;
     width:75%;
     bottom:0;
     right: 0;
     position:absolute;
 
+}
+.leftuv{
+    height:100%;
+    width:75%;
+    padding:1%;
+}
+.rightuv{
+    width:25%;
+    height:100%;
+    padding:1%;
+}
+.mapuv{
+    width:25%;
+    height:90%;
+    bottom:0;
+    right: 0;
+    position:absolute;
 }
 /*
 @media screen and (max-device-width: 450px){

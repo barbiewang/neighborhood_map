@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="container"><!--将所有内容放在container容器中-->
-        <div id = "leftSide"> <!--分左侧栏和右侧栏-->
+        <div id = "leftSide" class = "left"> <!--分左侧栏和右侧栏-->
             <h3 class="city">深圳市</h3>
             <div>
                 <!--使用knockout库绑定input和li的值-->
@@ -20,7 +20,7 @@
                 </ul>
             </div>
         </div>
-        <div id="rightSide">
+        <div id="rightSide" class="right">
             <div class="menu">
                 <!--这里用knockout的值给span加鼠标移进移出的效果 -->
                 <span class="nave" data-bind="event: { mouseover: enableDetails, mouseout: disableDetails }, style:{color:detailsEnabled()? 'blue':'white'}, click:showMenu">
@@ -30,7 +30,7 @@
                     菜单
                 </span>
             </div>
-            <div id="map"></div>
+            <div id="map" class="mapStyle"></div>
         </div>
     </div>
     <script  src="js/jquery.min.js"></script>
