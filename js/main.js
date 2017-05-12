@@ -107,7 +107,7 @@ var handleAddress = function (place) {
             //设置定时器，在3s以后取消弹跳；
             setTimeout(function() {
                 toggleBounce(targetMarker);
-            },3000);
+            },1500);
         }
 
     }
@@ -133,6 +133,7 @@ var renewLi = function(){
             });
             li.addEventListener("click",function(){
                 wikiBrief(this);
+                handleAddress(inputVal);
             });
 
 
