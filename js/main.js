@@ -120,8 +120,9 @@ var handleAddress = function (place) {
 };
 //在点击"go"button时触发的函数，更新ul列表
 var renewLi = function(){
-   var lis = $('.location');
+    var lis = $('.location');
     var inputVal = $('#autocomplete').val();
+    $('#wikiSummary').remove();
     //遍历所有li元素，将不等于input值的li隐藏，等于input值的li展现，并改变字体颜色
     for (var i= 0;i<lis.length;i++){
         var li = lis[i];
@@ -138,6 +139,7 @@ var renewLi = function(){
                 this.style.color = "white";
             });
             li.addEventListener("click",function(){
+
                 wikiBrief(this);
                 handleAddress(inputVal);
             });
@@ -183,7 +185,8 @@ var wikiLink = function(marker){
             var article = response[1][0];
             var url = response[3][0];
             //如果异步请求成功，则在infoWindow中添加wiki链接
-            wikiHeader.append('<div>' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
+            $(".wikiLink").remove();
+            wikiHeader.append('<div class="wikiLink">' + '<a href = "'+url + '">'+article+ '</a>' + '维基百科'+'</div>');
             //为了避免点击两次marker来取消弹跳，这里设置定时器，在异步请求成功后2s停止弹跳
             setTimeout(function(){
                 toggleBounce(marker);
@@ -211,7 +214,12 @@ var wikiBrief = function(li) {
         success: function (data) {
            // console.info(data);
             var summary = data.parse.text['*'];
-            li.innerHTML +=  "<div id='wikiSummary'>" + summary + "</div>";
+           // li.innerHTML +=  "<div id='wikiSummary'>" + summary + "</div>";
+           //  li.after("<div id='wikiSummary'></div>");
+            $('#wikiSummary').remove();
+            $("<div id='wikiSummary'>" +  summary + "</div>").insertAfter(li);
+            // li.after($("<div id='wikiSummary'>" +  summary + "</div>"))
+            // $("#wikiSummary").innerHTML += "<div>" + summary + "</div>";
             //var markersA = $("a");
             //想改变href的值，但不知为什么变不了
             // for(var i = 0;i<markersA.length;i++){
