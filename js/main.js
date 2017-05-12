@@ -193,6 +193,10 @@ var wikiLink = function(marker){
         }
     })
 };
+//设置地图未能加载的提示函数
+var mapError = function(){
+    alert("未能加载Google地图，请刷新重试");
+};
 //点击go button时触发的函数，获取维基百科的相关内容
 var wikiBrief = function(li) {
     var addr = li.innerText;
@@ -261,3 +265,4 @@ var toggleNave = function () {
         $(".mapuv").removeClass("mapuv").addClass("mapStyle");
     }
 };
+
