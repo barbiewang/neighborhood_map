@@ -24,7 +24,7 @@
             <div class="menu">
                 <!--这里用knockout的值给span加鼠标移进移出的效果 -->
                 <span class="nave" data-bind="event: { mouseover: enableDetails, mouseout: disableDetails }, style:{color:detailsEnabled()? 'blue':'white'}, click:showMenu">
-                        三
+                        <img  class = "hanburger" src = "nav.png" alt="menu" />
                 </span>
                 <span data-bind="visible: detailsEnabled">
                     菜单
