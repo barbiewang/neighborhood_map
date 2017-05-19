@@ -12,7 +12,7 @@
             <h3 class="city">深圳市</h3>
             <div>
                 <!--使用knockout库绑定input和li的值-->
-                <input id="autocomplete" type="text" placeholder="搜索深圳市景点" onFocus="geolocate()" data-bind="value=text"/>
+                <input id="autocomplete" type="text" placeholder="搜索深圳市景点" onFocus="geolocate()" data-bind="textInput:filterText"/>
                 <button  id="go" type="button">Go</button>
                 <ul id="locationLs" data-bind="foreach:places">
                     <li class= "location" data-bind="text:$data">

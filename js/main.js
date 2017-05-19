@@ -10,6 +10,10 @@ var MapViewModel = function (){
     this.detailsEnabled = ko.observable(false);
     this.places = ko.observableArray(touristPlaces);//默认显示所有地点
     this.text = ko.observable();
+    this.filterText = ko.observable("");
+    this.filterText.subscribe(function(newValue){
+        renewLi(newValue);
+    })
 };
 
 MapViewModel.prototype.enableDetails = function(){
