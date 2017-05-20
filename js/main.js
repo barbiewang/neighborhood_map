@@ -1,5 +1,5 @@
 /*
-这是这个使用knockOut的view Model
+ 这是这个使用knockOut的view Model
  */
 "use strict";
 //预先定义数组及数组的值；
@@ -9,11 +9,11 @@ var gobutton = $('#go');
 var MapViewModel = function (){
     this.detailsEnabled = ko.observable(false);
     this.places = ko.observableArray(touristPlaces);//默认显示所有地点
-    this.text = ko.observable();
+    this.text = ko.observable('');
     this.filterText = ko.observable("");
     this.filterText.subscribe(function(newValue){
         renewLi(newValue);
-    })
+    });
 };
 
 MapViewModel.prototype.enableDetails = function(){
@@ -31,6 +31,8 @@ ko.applyBindings(new MapViewModel());
 //先定义地图会使用到的变量
 var map,autocomplete;
 var markers = [];
+//创建infoWindow
+var largeInfoWindow;
 var locations = [
     {title: '世界之窗', location: {lat: 22.5347167, lng: 113.9734179}},
     {title: '欢乐谷', location: {lat: 22.5402908,lng: 113.9818588}},
@@ -48,8 +50,7 @@ var initMap = function() {
         mapTypeControl: false
     });
     //列出所有marker的地址
-    //创建infoWindow
-    var largeInfoWindow = new google.maps.InfoWindow();
+    largeInfoWindow = new google.maps.InfoWindow();
     //创建标记所在的边界
     var bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < locations.length; i++) {
@@ -73,6 +74,7 @@ var initMap = function() {
             populateInfoWindow(this, largeInfoWindow);
             wikiLink(this);
             toggleBounce(this);
+
         });
     }
         map.fitBounds(bounds);
@@ -86,7 +88,7 @@ var initMap = function() {
     gobutton.click(function() {
         var inputVal = $('#autocomplete').val();
         handleAddress(inputVal);
-        renewLi();
+        renewLi(inputVal);//这里可有可无，因为enter键也可以实现相应功能
     });
     //点击时改变地左右侧布局
     var nave = $(".nave");
@@ -94,6 +96,20 @@ var initMap = function() {
         toggleNave();
     });
 
+};
+//这个函数整合和所有li点击时会发生的事件
+var liClick = function(li){
+    var val = li.innerText;
+    for(var j = 0;j<markers.length;j++){
+        var marker = markers[j];
+        if(val == marker.title){
+            toggleBounce(marker);
+            populateInfoWindow(marker, largeInfoWindow);
+            wikiLink(marker);
+            wikiBrief(li);
+        }
+
+    }
 };
 //input输入并按enter键时出发的函数
 var fillInAddress = function () {
@@ -114,7 +130,7 @@ var handleAddress = function (place) {
             targetMarker = markers[i];
             targetMarker.setMap(map);
             toggleBounce(targetMarker);
-            //设置定时器，在3s以后取消弹跳；
+            //设置定时器，在1.5s以后取消弹跳；
             setTimeout(function() {
                 toggleBounce(targetMarker);
             },1500);
@@ -123,9 +139,9 @@ var handleAddress = function (place) {
     }
 };
 //在点击"go"button时触发的函数，更新ul列表
-var renewLi = function(){
+var renewLi = function(newValue){
     var lis = $('.location');
-    var inputVal = $('#autocomplete').val();
+    var inputVal = newValue;
     $('#wikiSummary').remove();
     //遍历所有li元素，将不等于input值的li隐藏，等于input值的li展现，并改变字体颜色
     for (var i= 0;i<lis.length;i++){
@@ -144,8 +160,10 @@ var renewLi = function(){
             });
             li.addEventListener("click",function(){
 
-                wikiBrief(this);
-                handleAddress(inputVal);
+                // wikiBrief(this);
+                // handleAddress(inputVal);
+                liClick(this);
+
             });
 
 
@@ -157,11 +175,14 @@ var renewLi = function(){
 var populateInfoWindow = function(marker,infoWindow){
     if(infoWindow.marker !== marker){
         infoWindow.marker = marker;
-        infoWindow.setContent("<div id = 'wiki-header' style='color:black;'>"+marker.title+"</div>");
+        var content = "<div id = 'wiki-header' style='color:black;'>"+marker.title+"</div>";
+        infoWindow.setContent(content);
         infoWindow.open(map,marker);
         infoWindow.addListener('closeclick',function(){
              infoWindow.setMarker(null);
-        })
+        });
+
+
     }
 };
 //设置marker弹跳的函数
@@ -185,7 +206,6 @@ var wikiLink = function(marker){
     $.ajax(wikiUrl, {
         dataType: 'jsonp',
         success: function (response) {
-            console.info(response);
             var article = response[1][0];
             var url = response[3][0];
             //如果异步请求成功，则在infoWindow中添加wiki链接
@@ -196,7 +216,7 @@ var wikiLink = function(marker){
                 toggleBounce(marker);
             },2000);
             //如果异步请求成功，则清除之前设置的wikiRequestTimeOut函数
-            clearTimeout(wikiRequestTimeOut)
+             clearTimeout(wikiRequestTimeOut)
         }
     })
 };
