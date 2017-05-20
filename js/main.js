@@ -147,7 +147,7 @@ var renewLi = function(newValue){
     for (var i= 0;i<lis.length;i++){
         var li = lis[i];
         li.style.display = "none";
-        if(li.innerText === inputVal){
+        if(checkValue(li.innerText,inputVal)){
             li.style.display = "block";
             li.style.color = "white";
             li.style.cursor = "pointer";
@@ -159,18 +159,21 @@ var renewLi = function(newValue){
                 this.style.color = "white";
             });
             li.addEventListener("click",function(){
-
                 // wikiBrief(this);
                 // handleAddress(inputVal);
                 liClick(this);
-
             });
-
-
         }
     }
-
 };
+//比较input的输入值和列表的值，当列表中含有输入的字符串，则显示出来
+function checkValue(value, filterText) {
+    if (filterText.length > 0){
+        return (value.toLowerCase().indexOf(filterText.toLowerCase()) > -1);
+    } else {
+        return true;
+    }
+}
 // 设置marker的infoWindow
 var populateInfoWindow = function(marker,infoWindow){
     if(infoWindow.marker !== marker){
