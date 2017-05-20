@@ -182,7 +182,8 @@ var populateInfoWindow = function(marker,infoWindow){
         infoWindow.setContent(content);
         infoWindow.open(map,marker);
         infoWindow.addListener('closeclick',function(){
-             infoWindow.setMarker(null);
+			infoWindow.marker = null;
+//             infoWindow.setMarker(null);
         });
 
 
