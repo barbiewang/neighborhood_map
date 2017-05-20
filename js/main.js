@@ -286,18 +286,36 @@ var wikiBrief = function(li) {
         }
     }
 //切换布局
-var toggleNave = function () {
+// var toggleNave = function () {
+//     var left= $(".left");
+//     var right = $(".right");
+//     var mapDiv = $(".mapStyle");
+//     if (left.length) {
+//         left.removeClass("left").addClass("leftuv");
+//         right.removeClass("right").addClass("rightuv");
+//         mapDiv.removeClass("mapStyle").addClass("mapuv");
+//     } else {
+//         $(".leftuv").removeClass("leftuv").addClass("left");
+//         $(".rightuv").removeClass("rightuv").addClass("right");
+//         $(".mapuv").removeClass("mapuv").addClass("mapStyle");
+//     }
+// };
+//隐藏或显示左侧栏
+var closeNav = function(){
     var left= $(".left");
     var right = $(".right");
-    var map = $(".mapStyle");
-    if (left.length) {
-        left.removeClass("left").addClass("leftuv");
-        right.removeClass("right").addClass("rightuv");
-        map.removeClass("mapStyle").addClass("mapuv");
-    } else {
-        $(".leftuv").removeClass("leftuv").addClass("left");
-        $(".rightuv").removeClass("rightuv").addClass("right");
-        $(".mapuv").removeClass("mapuv").addClass("mapStyle");
-    }
-};
+    var mapDiv = $(".mapStyle");
+    left.hide();
+    right.width("100%");
+    mapDiv.width ("100%");
 
+
+};
+var openNav = function(){
+    var left= $(".left");
+    var right = $(".right");
+    var mapDiv = $(".mapStyle");
+    left.show();
+    right.width("75%");
+    mapDiv.width ("75%");
+};
