@@ -285,37 +285,50 @@ var wikiBrief = function(li) {
             });
         }
     }
-//切换布局
-// var toggleNave = function () {
+//该函数用于增加左侧栏的宽度，以便在数据多的时查看
+var toggleNave = function () {
+    // var left= $(".left");
+    // var right = $(".right");
+    // var mapDiv = $(".mapStyle");
+    // if (left.length) {
+    //     left.removeClass("left").addClass("leftuv");
+    //     right.removeClass("right").addClass("rightuv");
+    //     mapDiv.removeClass("mapStyle").addClass("mapuv");
+    // } else {
+    //     $(".leftuv").removeClass("leftuv").addClass("left");
+    //     $(".rightuv").removeClass("rightuv").addClass("right");
+    //     $(".mapuv").removeClass("mapuv").addClass("mapStyle");
+    // }
+    var left = $("#leftSide");
+    var right = $("#rightSide");
+    left.width("80%");
+    right.width("20%");
+};
+//隐藏或显示左侧栏
+// var closeNav = function(){
 //     var left= $(".left");
 //     var right = $(".right");
 //     var mapDiv = $(".mapStyle");
-//     if (left.length) {
-//         left.removeClass("left").addClass("leftuv");
-//         right.removeClass("right").addClass("rightuv");
-//         mapDiv.removeClass("mapStyle").addClass("mapuv");
-//     } else {
-//         $(".leftuv").removeClass("leftuv").addClass("left");
-//         $(".rightuv").removeClass("rightuv").addClass("right");
-//         $(".mapuv").removeClass("mapuv").addClass("mapStyle");
-//     }
+//     left.hide();
+//     right.width("100%");
+//     mapDiv.width ("100%");
+//
+//
+// };
+// var openNav = function(){
+//     var left= $(".left");
+//     var right = $(".right");
+//     var mapDiv = $(".mapStyle");
+//     left.show();
+//     right.width("75%");
+//     mapDiv.width ("75%");
 // };
 //隐藏或显示左侧栏
 var closeNav = function(){
-    var left= $(".left");
-    var right = $(".right");
-    var mapDiv = $(".mapStyle");
-    left.hide();
-    right.width("100%");
-    mapDiv.width ("100%");
-
-
+document.getElementById("leftSide").style.width = "0";
 };
+
+//当用toggleNave函数拉伸了左侧栏的宽度后，可用该函数恢复正常宽度；
 var openNav = function(){
-    var left= $(".left");
-    var right = $(".right");
-    var mapDiv = $(".mapStyle");
-    left.show();
-    right.width("75%");
-    mapDiv.width ("75%");
+    document.getElementById("leftSide").style.width = "20%";
 };

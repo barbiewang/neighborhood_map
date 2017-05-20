@@ -14,15 +14,27 @@ html, body{
 }
 .left{
     height:100%;
-    width:25%;
-    padding:1%;
+    /*width:25%;*/
+    /*padding:1%;*/
+    /*height: 100%;*/
+    /*默认显示为20%的宽度*/
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    transition: 0.5s;
+    overflow-x: hidden;
+    /*padding-top: 20px;*/
 }
 .city{
     padding:0 25%;
     letter-spacing:5px;
 }
 .right{
-    width:75%;
+    /*width:75%;*/
+    width:100%;
     height:100%;
     padding:1%
 
@@ -45,21 +57,26 @@ html, body{
 
 }
 .menu{
-    height:10%;
-    width:100%;
-    padding-top:1%;
+    height:6%;
+    /*width:100%;*/
+    padding-top:0;
+    right:1%;
+    position:absolute;
+
 }
 .nave,.arrowLeft,.arrowRight{
     cursor:pointer;
-    font-size:1.5em;
+    font-size:0.5em;
+
 
 }
 .arrowRight{
     padding-right:1em;
 }
 .mapStyle{
-    height:90%;
-    width:75%;
+    height:94%;
+    /*width:75%;*/
+    width:100%;
     bottom:0;
     right: 0;
     position:absolute;
@@ -81,6 +98,11 @@ html, body{
     bottom:0;
     right: 0;
     position:absolute;
+}
+.close{
+    position:absolute;
+    top:5%;
+    left: 80%;
 }
 /*
 @media screen and (max-device-width: 450px){
