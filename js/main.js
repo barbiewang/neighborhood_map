@@ -258,15 +258,17 @@ var wikiBrief = function(li) {
             // }
             clearTimeout(wikiRequestTimeOut)
             }
-    }).fail(function(response){
-        var error = response.error.info;
-        li.innerHTML += "<div> Request failed:"+ error+"</div>";
-        clearTimeout(wikiRequestTimeOut)
+    // }).fail(function(response){
+    //     var error = response.error.info;
+    //     li.innerHTML += "<div> Request failed:"+ error+"</div>";
+    //     clearTimeout(wikiRequestTimeOut)
     });
     var wikiRequestTimeOut = setTimeout(function () {
         //li.append('<div> failed to get wikipedia sources</div>');
-        li.innerHTML += "<div> 请求超时，请重新尝试</div>";
-    },8000);
+        $('#wikiSummary').remove();
+        $("<div id='wikiSummary'>" +  "请求超时，请重新尝试" + "</div>").insertAfter(li);
+       // li.innerHTML += "<div> 请求超时，请重新尝试</div>";
+    },3000);
 };
 
 // Bias the autocomplete object to the user's geographical location,
