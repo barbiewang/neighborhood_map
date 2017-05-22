@@ -183,7 +183,6 @@ var populateInfoWindow = function(marker,infoWindow){
         infoWindow.open(map,marker);
         infoWindow.addListener('closeclick',function(){
 			infoWindow.marker = null;
-//             infoWindow.setMarker(null);
         });
 
 
@@ -246,32 +245,16 @@ var wikiBrief = function(li) {
             if(data.parse.text['*']){
                 summary = data.parse.text['*'].toString().replace(/\/wiki\//g, "https://zh.wikipedia.org/wiki/");
             }
-           // li.innerHTML +=  "<div id='wikiSummary'>" + summary + "</div>";
-           //  li.after("<div id='wikiSummary'></div>");
+            //先移除div的内容，避免点击两次以上时内容重复出现
             $('#wikiSummary').remove();
+            //这里用jquery的insertAfter API，使内容插到li元素外后面，不会干扰li元素的点击
             $("<div id='wikiSummary'>" +  summary + "</div>").insertAfter(li);
-            // li.after($("<div id='wikiSummary'>" +  summary + "</div>"))
-            // $("#wikiSummary").innerHTML += "<div>" + summary + "</div>";
-            //var markersA = $("a");
-            //想改变href的值，但不知为什么变不了
-            // for(var i = 0;i<markersA.length;i++){
-            //     var markerA = markersA[i];
-                // var hrefVal = markerA.getAttribute("href");
-                // hrefVal.replace(/wiki/,"https://zh.wikipedia.org/wiki/");
-                // markerA.setAttribute("href","https://zh.wikipedia.org/wiki/"+ attr);
-            // }
             clearTimeout(wikiRequestTimeOut)
             }
-    // }).fail(function(response){
-    //     var error = response.error.info;
-    //     li.innerHTML += "<div> Request failed:"+ error+"</div>";
-    //     clearTimeout(wikiRequestTimeOut)
     });
     var wikiRequestTimeOut = setTimeout(function () {
-        //li.append('<div> failed to get wikipedia sources</div>');
         $('#wikiSummary').remove();
         $("<div id='wikiSummary'>" +  "请求超时，请重新尝试" + "</div>").insertAfter(li);
-       // li.innerHTML += "<div> 请求超时，请重新尝试</div>";
     },3000);
 };
 
@@ -311,25 +294,7 @@ var toggleNave = function () {
     left.width("80%");
     right.width("20%");
 };
-//隐藏或显示左侧栏
-// var closeNav = function(){
-//     var left= $(".left");
-//     var right = $(".right");
-//     var mapDiv = $(".mapStyle");
-//     left.hide();
-//     right.width("100%");
-//     mapDiv.width ("100%");
-//
-//
-// };
-// var openNav = function(){
-//     var left= $(".left");
-//     var right = $(".right");
-//     var mapDiv = $(".mapStyle");
-//     left.show();
-//     right.width("75%");
-//     mapDiv.width ("75%");
-// };
+
 //隐藏或显示左侧栏
 var closeNav = function(){
 document.getElementById("leftSide").style.width = "0";
