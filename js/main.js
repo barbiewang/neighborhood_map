@@ -3,7 +3,7 @@
  */
 "use strict";
 //预先定义数组及数组的值；
-var touristPlaces = ["世界之窗","欢乐谷","海岸城","深圳湾公园","羊台山公园","莲花山公园"];
+var touristPlaces = ["世界之窗","欢乐谷","宝安机场","深圳湾公园","羊台山公园","莲花山公园"];
 var gobutton = $('#go');
 
 var MapViewModel = function (){
@@ -36,7 +36,7 @@ var largeInfoWindow;
 var locations = [
     {title: '世界之窗', location: {lat: 22.5347167, lng: 113.9734179}},
     {title: '欢乐谷', location: {lat: 22.5402908,lng: 113.9818588}},
-    {title: '海岸城', location: {lat: 22.516975,lng: 113.934716}},
+    {title: '宝安机场', location: {lat: 22.647665,lng: 113.821075}},
     {title: '深圳湾公园', location: {lat: 22.5224158, lng: 114.0003285}},
     {title: "羊台山公园", location: {lat: 22.6512447, lng: 113.9710522}},
     {title: "莲花山公园", location: {lat: 22.555043, lng: 114.058332}}
@@ -204,9 +204,10 @@ var wikiLink = function(marker){
     var wikiUrl = 'https://zh.wikipedia.org/w/api.php?action=opensearch&search=' +addr+ '&format=json&callback=wikiCallback';
     //如果8秒后无反应，则显示失败加载；
     var wikiRequestTimeOut = setTimeout(function(){
-        wikiHeader.append('<div> failed to get wikipedia sources</div>');
+        $(".wikiLink").remove();
+        wikiHeader.append('<div class="wikiLink"> failed to get wikipedia sources</div>');
         toggleBounce(marker);
-    },8000);
+    },3000);
     $.ajax(wikiUrl, {
         dataType: 'jsonp',
         success: function (response) {
@@ -241,7 +242,10 @@ var wikiBrief = function(li) {
        headers: {'Api-User-Agent': 'Example/1.0'},
         success: function (data) {
            // console.info(data);
-            var summary = data.parse.text['*'];
+            var summary = "";
+            if(data.parse.text['*']){
+                summary = data.parse.text['*'].toString().replace(/\/wiki\//g, "https://zh.wikipedia.org/wiki/");
+            }
            // li.innerHTML +=  "<div id='wikiSummary'>" + summary + "</div>";
            //  li.after("<div id='wikiSummary'></div>");
             $('#wikiSummary').remove();
