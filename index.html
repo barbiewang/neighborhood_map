@@ -10,7 +10,7 @@
     <div id="container"><!--将所有内容放在container容器中-->
         <div id = "leftSide" class = "left"> <!--分左侧栏和右侧栏-->
             <h3 class="city">深圳市</h3>
-            <span class="close" onclick="closeNav()"><img src="close.png" alt="close" /></span>
+            <span class="close" onclick="closeNav()"><img src="close.png" alt="close" ></span>
             <div>
                 <!--使用knockout库绑定input和li的值-->
                 <input id="autocomplete" type="text" placeholder="搜索深圳市景点" onFocus="geolocate()" data-bind="textInput:filterText"/>
@@ -23,8 +23,8 @@
         </div>
         <div id="rightSide" class="right">
             <div class="menu">
-                <span  class="arrowLeft" onclick="closeNav()"><img src = "arrowleft.png" alt="arrow" /></span>
-                <span class="arrowRight" onclick="openNav()"><img src="arrowright.png" alt="arrow" /></span>
+                <span  class="arrowLeft" onclick="closeNav()"><img src = "arrowleft.png" alt="arrow" ></span>
+                <span class="arrowRight" onclick="openNav()"><img src="arrowright.png" alt="arrow" ></span>
                 <span class="nave" onclick="toggleNave()" >
                         <img  class = "hanburger" src = "nav.png" alt="menu" />
                 </span>
